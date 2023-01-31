@@ -204,15 +204,15 @@ void Character::setPosAlien(Board &b)
     b.setObject(alienRow_, alienColumn_, alien);
 }
 
-void Character::setPosZombie(Board &b)
-{
-    char zombie = 'Z';
+// void Character::setPosZombie(Board &b)
+// {
+//     char zombie = 'Z';
 
-    zombieRow_ = //random position
-    zombieColumn_ = //random position
+//     zombieRow_ = //random position
+//     zombieColumn_ = //random position
 
-    b.setObject(zombieRow_, zombieColumn_, zombie);
-}
+//     b.setObject(zombieRow_, zombieColumn_, zombie);
+// }
 
 void testSetRowAndColumnAndAlien()
 {
