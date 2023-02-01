@@ -2,10 +2,10 @@
 // Course: TCP1101 PROGRAMMING FUNDAMENTALS 
 // Year: Trimester 1, 2022/23 (T2215) 
 // Lab: TT2L 
-// Names: SYED DANIAL IMTIAZ BIN SYED ABDUL RAHIM | HILMAN DANISH BIN HAMKA 
-// IDs: 1221301145 | 1221301132  
-// Emails: 1221301145@student.mmu.edu.my | 1221301132@student.mmu.edu.my  
-// Phones: 011-59221496 | 019-4742703  
+// Names: SYED DANIAL IMTIAZ BIN SYED ABDUL RAHIM | HILMAN DANISH BIN HAMKA | ADAM BIN AZMANHAZIM
+// IDs: 1221301145 | 1221301132 | 1211102573
+// Emails: 1221301145@student.mmu.edu.my | 1221301132@student.mmu.edu.my | 1211102573@student.mmu.edu.my
+// Phones: 011-59221496 | 019-4742703 | 013-8119776
 // ********************************************************* 
 
 #include "pf/helper.h"
