@@ -2,7 +2,7 @@
 
 ## Video Demo
 
-Please provide the YouTube link to your [Video Demo](https://youtube.com).
+[TCP1101 | Assignment Part 1: Video Demo](https://youtu.be/rTWrMOoeHlA).
 
 ## Minimum Requirements
 
@@ -10,16 +10,19 @@ Please provide the YouTube link to your [Video Demo](https://youtube.com).
 
 List all the features completed.
 
-1. Cool Feature #1
-2. Cool Feature #2
-3. *add more*
+1. Displaying board and game objects on board
+2. Randomizing board size
+3. Allowing user to change board size
+4. Putting the Alien character in the middle of the board
 
 ### To Do
 
-List all the features not yet done. Remove this section if there is no incomplete requirements.
-
-1. Cool Feature #1
-2. *add more*
+1. Make Alien movements and attributes
+2. Randomly generate zombie position, movements and attributes
+3. Adding game objects' interaction
+4. Adding game controls
+5. Adding save and load function 
+6. Additional features
 
 ## Additional Features
 
@@ -27,25 +30,21 @@ Describe the additional features that has been implemented.
 
 ## Contributions
 
-List down the contribution of each group members.
-
-For example:
-
-### Tony Stark
+### Syed Danial Imtiaz Bin Syed Abdul Rahim
 
 1. Randomly generate game board.
-2. *add more*
+2. Making user able to customize game board size
 
-### Steve Rogers
+### Hilman Danish Bin Hamka
 
-1. Zombie movement and attack behaviour.
-2. *add more*
+1. Make the Character class for Alien and zombie
+2. contributing in cleaning the code
 
-### Dr. Strange 
+### Adam Bin Azmanhazim 
 
-1. Implement all game objects.
-2. *add more*
+1. Recording the demo video
+2. making the code look clean
 
 ## Problems Encountered & Solutions
 
-Describe the problems encountered and provide the solutions / plan for the solutions.
+Describe the problems encountered and provide the solutions / plan for the solutions. 
