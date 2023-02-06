@@ -71,13 +71,13 @@ int Board::changeRow()
 {   
     int newRow = 0;    
 
-    cout << endl << "change row = ";
+    cout << endl << "new row = ";
     cin >> newRow;                      
 
     while(newRow <= 4 || newRow >= 17)
     {
         cout << endl << " value too small/big! please enter a different value.";
-        cout << endl << "change row = ";
+        cout << endl << "new row = ";
         cin >> newRow;
     }
 
@@ -88,13 +88,13 @@ int Board::changeColumn()
 {
     int newColumn = 0;
 
-    cout << endl << "change column = ";
+    cout << endl << "new column = ";
         cin >> newColumn;
 
     while(newColumn <= 6 || newColumn >= 31)
     {
         cout << endl << " value too small/big! please enter a different value.";
-        cout << endl << "change column = ";
+        cout << endl << "new column = ";
         cin >> newColumn;
     }                   
 
@@ -180,21 +180,52 @@ class Character
 {
 private :
     int alienRow_, alienColumn_;
-    int zombieRow_, zombieColumn_;
+    int zombieRow_[9];
+    int zombieColumn_[9];
 
 public :
     Character();
 
-    void setPosAlien(Board &b);
-    void setPosZombie(Board &b);
+    int zombieSize = 1 + rand() % 9;
 
+    void init(Board &b);
+    void setZombieSize(int zom);
+    int getZombieSize();
+    int changeZombieSize();
 };
 
 Character::Character()
 { 
 }
 
-void Character::setPosAlien(Board &b)
+void Character::setZombieSize(int zom)
+{
+    zombieSize = zom;
+}
+
+int Character::getZombieSize()
+{
+    return zombieSize;
+}
+
+int Character::changeZombieSize()
+{
+    int newZombieSize = 0;    
+
+    cout << endl << "new zombie size = ";
+    cin >> newZombieSize;                      
+
+    while(newZombieSize <= 0 || newZombieSize >= 10)
+    {
+        cout << endl << " value too small/big! please enter a different value.";
+        cout << endl << "new zombie size = ";
+        cin >> newZombieSize;
+    }
+
+    return newZombieSize;
+}
+
+void Character::init(Board &b)
 {
     char alien = 'A';
 
@@ -202,27 +233,16 @@ void Character::setPosAlien(Board &b)
     alienColumn_ = b.getColumn() / 2 + 1;
 
     b.setObject(alienRow_, alienColumn_, alien);
-}
 
-// void Character::setPosZombie(Board &b)
-// {
-//     char zombie = 'Z';
+    char zombie[] = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
-//     zombieRow_ = //random position
-//     zombieColumn_ = //random position
+    for(int n = 0; n < zombieSize; n++)
+    {
+        zombieRow_[n] = 1 + rand() % b.getRow();
+        zombieColumn_[n] = 1 + rand() % b.getColumn();
 
-//     b.setObject(zombieRow_, zombieColumn_, zombie);
-// }
-
-void testSetRowAndColumnAndAlien()
-{
-    Board b;
-    Character alien;
-    b.setRow(b.changeRow());
-    b.setColumn(b.changeColumn());
-    b.init();
-    alien.setPosAlien(b);
-    b.displayBoard();
+        b.setObject(zombieRow_[n], zombieColumn_[n], zombie[n]);
+    }
 }
 
 int main()
@@ -230,11 +250,27 @@ int main()
     srand(time(NULL));
 
     Board b;
-    Character alien;
+    Character ch;
 
-    
+    ch.init(b);
+
     b.displayBoard();
 
-    testSetRowAndColumnAndAlien();
+    cout << "board row    => " << b.getRow() << endl
+         << "board column => " << b.getColumn() << endl
+         << "zombie size  => " << ch.getZombieSize() << endl << endl;
+
+    b.setRow(b.changeRow());
+    b.setColumn(b.changeColumn());
+    ch.setZombieSize(ch.changeZombieSize());
+
+    b.init();
+    ch.init(b);
+
+    b.displayBoard();
+
+    cout << "board row    => " << b.getRow() << endl
+         << "board column => " << b.getColumn() << endl
+         << "zombie size  => " << ch.getZombieSize() << endl << endl;
 }
 
