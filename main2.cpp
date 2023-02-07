@@ -180,8 +180,9 @@ class Character
 {
 private :
     int alienRow_, alienColumn_;
-    int zombieRow_[9];
-    int zombieColumn_[9];
+    int zombieRow_[9], zombieColumn_[9];
+    int alienLife_, alienAttack_;
+    int zombieLife_[9], zombieAttack_[9]; 
 
 public :
     Character();
@@ -189,9 +190,16 @@ public :
     int zombieSize = 1 + rand() % 9;
 
     void init(Board &b);
+
     void setZombieSize(int zom);
     int getZombieSize();
     int changeZombieSize();
+
+    int getZombieLife(int n);
+    int getZombieAttack(int n);
+
+    int getAlienLife();
+    int getAlienAttack();
 };
 
 Character::Character()
@@ -225,6 +233,26 @@ int Character::changeZombieSize()
     return newZombieSize;
 }
 
+int Character::getZombieLife(int n)
+{
+    return zombieLife_[n];
+}
+
+int Character::getZombieAttack(int n)
+{
+    return zombieAttack_[n];
+}
+
+int Character::getAlienLife()
+{
+    return alienLife_;
+}
+
+int Character::getAlienAttack()
+{
+    return alienAttack_;
+}
+
 void Character::init(Board &b)
 {
     char alien = 'A';
@@ -234,6 +262,9 @@ void Character::init(Board &b)
 
     b.setObject(alienRow_, alienColumn_, alien);
 
+    alienLife_ = 100 + rand() % 4 * 50;
+    alienAttack_ = 0;
+
     char zombie[] = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
     for(int n = 0; n < zombieSize; n++)
@@ -242,7 +273,34 @@ void Character::init(Board &b)
         zombieColumn_[n] = 1 + rand() % b.getColumn();
 
         b.setObject(zombieRow_[n], zombieColumn_[n], zombie[n]);
+
+        zombieLife_[n] = 100 + rand() % 5 * 50;
+        zombieAttack_[n] = 5 + rand() % 5 * 5;
     }
+}
+
+class GameObject
+{
+private :
+
+public :
+    GameObject();
+
+};
+
+GameObject::GameObject()
+{   
+}
+
+void displayCharacterAtributes(Character ch)
+{
+    cout << "\tAlien    : Life " << ch.getAlienLife() << ",\tAttack   " << ch.getAlienAttack() << endl;
+
+    for(int x = 0; x < ch.getZombieSize(); x++)
+    {
+        cout << "\tZombie " << x + 1 << " : Life " << ch.getZombieLife(x) << ",\tAttack   " << ch.getZombieAttack(x) << endl;
+    }
+    cout << "\n\n";
 }
 
 int main()
@@ -272,5 +330,7 @@ int main()
     cout << "board row    => " << b.getRow() << endl
          << "board column => " << b.getColumn() << endl
          << "zombie size  => " << ch.getZombieSize() << endl << endl;
+
+    displayCharacterAtributes(ch);
 }
 
