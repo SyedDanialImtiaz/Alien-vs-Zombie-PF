@@ -1,6 +1,7 @@
 # Alien vs. Zombie
 
-This is a assignment project inspired by a mobile game app called Alien Path..
+This is a assignment project inspired by a mobile game app called Alien Path. It is an adventurous game which the Alien (the player)
+must go through challenges and obstacles to defeat the Zombies in the Battlefield.
 
 YouTube link to our video demo [TCP1101 | Assignment Part 1: Video Demo](https://youtu.be/rTWrMOoeHlA).
 
