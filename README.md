@@ -1,10 +1,8 @@
 # Alien vs. Zombie
 
-Please introduce the game here.
+This is a assignment project inspired by a mobile game app called Alien Path..
 
-You may add one signature screenshot of your program here or above the title. Check out [this tutorial](https://www.digitalocean.com/community/tutorials/markdown-markdown-images) to learn how to do it.
-
-Please provide the YouTube link to your [Video Demo](https://youtube.com).
+YouTube link to our video demo [TCP1101 | Assignment Part 1: Video Demo](https://youtu.be/rTWrMOoeHlA).
 
 ## Compilation Instructions
 
