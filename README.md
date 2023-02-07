@@ -8,20 +8,17 @@ Please provide the YouTube link to your [Video Demo](https://youtube.com).
 
 ## Compilation Instructions
 
-Provide instructions on how to compile your program, especially when it is non-trivial.
-
-For example:
-
 ```
-g++ main.cpp folder1\code.cpp folder2\code.cpp ......
+g++ pf\*.cpp main2.cpp -o game
 ```
 
 ## User Manual
 
-Please provide the user manual on how to use your program.
-
-Please DO NOT change the Progress Log below. Leave it as it is.
-
+*How to customize size of the board*
+1. User must prompt the number of rows and columns.
+2. Once done, the board will be appeared as it prompted before and the Alien will automatically
+   positioned at the centre of the board.
+   
 ## Progress Log
 
 - [Part 1](PART1.md)
@@ -29,9 +26,7 @@ Please DO NOT change the Progress Log below. Leave it as it is.
 
 ## Contributors
 
-Please replace the following with your group members' names. 
-
 - Syed Danial Imtiaz Bin Syed Abdul Rahim
 - Hilman Danish Bin Hamka
-
+- Adam Bin Azmanhazim
 
