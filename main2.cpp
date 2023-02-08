@@ -179,19 +179,22 @@ void Board::displayBoard()
 class Character
 {
 private :
-    int alienRow_, alienColumn_;
+    char alien = 'A';
+    vector<char>zombie;
+    int alienRow_;
+    int alienColumn_;
     int zombieRow_[9], zombieColumn_[9];
     int alienLife_, alienAttack_;
     int zombieLife_[9], zombieAttack_[9]; 
+    int zombieSize_ = 1 + rand() % 9;;
+    string alienInput_;
 
 public :
     Character();
 
-    int zombieSize = 1 + rand() % 9;
-
     void init(Board &b);
 
-    void setZombieSize(int zom);
+    void setZombieSize(int zombieSize);
     int getZombieSize();
     int changeZombieSize();
 
@@ -200,20 +203,38 @@ public :
 
     int getAlienLife();
     int getAlienAttack();
+
+    void setAlienRow(int alienRow);
+    void setAlienColumn(int alienColumn);
+
+    int getAlienRow();
+    int getAlienColumn();
+
+    void alienMove(Board &b, string alienInput);
 };
 
 Character::Character()
 { 
 }
 
-void Character::setZombieSize(int zom)
+void Character::setAlienRow(int alienRow)
 {
-    zombieSize = zom;
+    alienRow_ = alienRow;
+}
+
+void Character::setAlienColumn(int alienColumn)
+{
+    alienColumn_ = alienColumn;
+}
+
+void Character::setZombieSize(int zombieSize)
+{
+    zombieSize_ = zombieSize;
 }
 
 int Character::getZombieSize()
 {
-    return zombieSize;
+    return zombieSize_;
 }
 
 int Character::changeZombieSize()
@@ -253,21 +274,61 @@ int Character::getAlienAttack()
     return alienAttack_;
 }
 
+int Character::getAlienRow()
+{
+    return alienRow_;
+}
+
+int Character::getAlienColumn()
+{
+    return alienColumn_;
+}
+
+void Character::alienMove(Board &b, string alienInput)
+{
+    if( alienInput == "up" )
+    { 
+        setAlienRow(alienRow_ + 1);
+        b.setObject(alienRow_, alienColumn_, alien); 
+        b.setObject(alienRow_ - 1, alienColumn_, '.');
+    }
+    else if( alienInput == "down" )
+    {
+        setAlienRow(alienRow_ - 1);
+        b.setObject(alienRow_, alienColumn_, alien);
+        b.setObject(alienRow_ + 1, alienColumn_, '.');
+    }
+    else if( alienInput == "left" )
+    {
+        setAlienColumn(alienColumn_ - 1);
+        b.setObject(alienRow_, alienColumn_, alien);
+        b.setObject(alienRow_, alienColumn_ + 1, '.');
+    }
+    else if( alienInput == "right" )
+    {
+        setAlienColumn(alienColumn_ + 1);
+        b.setObject(alienRow_, alienColumn_, alien);
+        b.setObject(alienRow_, alienColumn_ - 1, '.');
+    }
+    else
+    {
+        cout << "invalid input";
+    }
+}
+
 void Character::init(Board &b)
 {
-    char alien = 'A';
-
-    alienRow_ = b.getRow() / 2 + 1;
-    alienColumn_ = b.getColumn() / 2 + 1;
+    setAlienRow(b.getRow() / 2 + 1);
+    setAlienColumn(b.getColumn() / 2 + 1);
 
     b.setObject(alienRow_, alienColumn_, alien);
 
     alienLife_ = 100 + rand() % 4 * 50;
     alienAttack_ = 0;
 
-    char zombie[] = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
+    zombie = {'1','2', '3', '4', '5', '6', '7', '8', '9'};
 
-    for(int n = 0; n < zombieSize; n++)
+    for(int n = 0; n < zombieSize_; n++)
     {
         zombieRow_[n] = 1 + rand() % b.getRow();
         zombieColumn_[n] = 1 + rand() % b.getColumn();
@@ -303,20 +364,25 @@ void displayCharacterAtributes(Character ch)
     cout << "\n\n";
 }
 
+void displayBoardInfo(Board b, Character ch)
+{
+    cout << "board row    => " << b.getRow() << endl
+         << "board column => " << b.getColumn() << endl
+         << "zombie size  => " << ch.getZombieSize() << endl << endl;
+}
+
 int main()
 {
     srand(time(NULL));
 
     Board b;
     Character ch;
+    string alienInput;
 
     ch.init(b);
 
-    b.displayBoard();
-
-    cout << "board row    => " << b.getRow() << endl
-         << "board column => " << b.getColumn() << endl
-         << "zombie size  => " << ch.getZombieSize() << endl << endl;
+    //b.displayBoard();
+    displayBoardInfo(b, ch);
 
     b.setRow(b.changeRow());
     b.setColumn(b.changeColumn());
@@ -326,11 +392,18 @@ int main()
     ch.init(b);
 
     b.displayBoard();
-
-    cout << "board row    => " << b.getRow() << endl
-         << "board column => " << b.getColumn() << endl
-         << "zombie size  => " << ch.getZombieSize() << endl << endl;
-
+    displayBoardInfo(b, ch);
     displayCharacterAtributes(ch);
-}
 
+    int m = 0;
+    do{
+        cout << "\n Alien input => "; cin >> alienInput;
+        ch.alienMove(b, alienInput);
+
+        b.displayBoard();
+        displayBoardInfo(b, ch);
+        displayCharacterAtributes(ch);
+
+    }while(m == 0);
+
+}
