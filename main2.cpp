@@ -31,6 +31,7 @@ public:
     void init();
     void displayBoard();
     void setObject(int row, int column, char object);
+    char getObject(int row, int column);
 
     int changeRow();
     int changeColumn();
@@ -104,6 +105,11 @@ int Board::changeColumn()
 void Board::setObject(int row, int column, char object)
 {
     board_[ getRow() - row ][ column - 1 ] = object;
+}
+
+char Board::getObject(int row, int column)
+{
+    return board_[ getRow() - row ][ column - 1 ];
 }
 
 void Board::init()
@@ -181,11 +187,12 @@ class Character
 private :
     char alien = 'A';
     vector<char>zombie;
+
     int alienRow_;
     int alienColumn_;
     int zombieRow_[9], zombieColumn_[9];
     int alienLife_, alienAttack_;
-    int zombieLife_[9], zombieAttack_[9]; 
+    int zombieLife_[9], zombieAttack_[9], zombieRange_[9]; 
     int zombieSize_ = 1 + rand() % 9;;
     string alienInput_;
 
@@ -200,6 +207,7 @@ public :
 
     int getZombieLife(int n);
     int getZombieAttack(int n);
+    int getZombieRange(int n);
 
     int getAlienLife();
     int getAlienAttack();
@@ -262,6 +270,11 @@ int Character::getZombieLife(int n)
 int Character::getZombieAttack(int n)
 {
     return zombieAttack_[n];
+}
+
+int Character::getZombieRange(int n)
+{
+    return zombieRange_[n];
 }
 
 int Character::getAlienLife()
@@ -337,6 +350,7 @@ void Character::init(Board &b)
 
         zombieLife_[n] = 100 + rand() % 5 * 50;
         zombieAttack_[n] = 5 + rand() % 5 * 5;
+        zombieRange_[n] = 1 + rand() % 3;
     }
 }
 
@@ -355,11 +369,14 @@ GameObject::GameObject()
 
 void displayCharacterAtributes(Character ch)
 {
-    cout << "\tAlien    : Life " << ch.getAlienLife() << ",\tAttack   " << ch.getAlienAttack() << endl;
+    cout << " Alien    : Life " << ch.getAlienLife() << ",\tAttack   " << ch.getAlienAttack() << endl;
 
     for(int x = 0; x < ch.getZombieSize(); x++)
     {
-        cout << "\tZombie " << x + 1 << " : Life " << ch.getZombieLife(x) << ",\tAttack   " << ch.getZombieAttack(x) << endl;
+        cout << " Zombie " << x + 1 
+             << " : Life " << ch.getZombieLife(x) 
+             << ",\tAttack   " << ch.getZombieAttack(x) 
+             << "\tRange   " << ch.getZombieRange(x) << endl;
     }
     cout << "\n\n";
 }
@@ -377,7 +394,7 @@ int main()
 
     Board b;
     Character ch;
-    string alienInput;
+    string command;
 
     ch.init(b);
 
@@ -397,8 +414,8 @@ int main()
 
     int m = 0;
     do{
-        cout << "\n Alien input => "; cin >> alienInput;
-        ch.alienMove(b, alienInput);
+        cout << "\n <Command> => "; cin >> command;
+        ch.alienMove(b, command);
 
         b.displayBoard();
         displayBoardInfo(b, ch);
