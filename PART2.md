@@ -10,7 +10,7 @@ Please provide the YouTube link to your [Video Demo](https://youtube.com).
 
 List all the features completed.
 
-1. Cool Feature #1
+1. 
 2. Cool Feature #2
 3. *add more*
 
@@ -27,24 +27,21 @@ Describe the additional features that has been implemented.
 
 ## Contributions
 
-List down the contribution of each group members.
 
-For example:
+### Syed Danial Imtiaz bin Syed Rahim
 
-### Tony Stark
+1. Adding movement to the alien
+2. Adding quit feature
 
-1. Randomly generate game board.
-2. *add more*
+### Hilman Danish bin Hamka
 
-### Steve Rogers
+1. Writing the documentation
+2. Adding objects function
 
-1. Zombie movement and attack behaviour.
-2. *add more*
+### Adam bin Azmanhazim
 
-### Dr. Strange
+1. Making a video for the demo of the game
 
-1. Implement all game objects.
-2. *add more*
 
 ## Problems Encountered & Solutions
 
