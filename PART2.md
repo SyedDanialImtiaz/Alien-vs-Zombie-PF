@@ -2,24 +2,25 @@
 
 ## Video Demo
 
-Please provide the YouTube link to your [Video Demo](https://youtube.com).
+[Video Demo](https://youtube.com).
 
 ## Minimum Requirements
 
 ### Completed
 
-List all the features completed.
 
-1. 
-2. Cool Feature #2
-3. *add more*
+1. Make Alien movements and attributes
+2. Randomly generate zombie position and attributes
+3. Adding game controls
 
 ### To Do
 
 List all the features not yet done. Remove this section if there is no incomplete requirements.
 
-1. Cool Feature #1
-2. *add more*
+1. Addiing save and load feature
+2. Adding game objects' interaction
+3. Additional features
+4. Adding zombies' movement
 
 ## Additional Features
 
