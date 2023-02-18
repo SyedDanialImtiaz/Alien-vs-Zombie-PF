@@ -25,19 +25,19 @@ private:
 public:
     Board();
     
-    void setRow(int row);
-    void setColumn(int column);
+    void setRow(int row) { row_ = row; }
+    void setColumn(int column) { column_ = column; }
 
     void init();
     void displayBoard();
-    void setObject(int row, int column, char object);
-    char getObject(int row, int column);
+    void setObject(int row, int column, char object) { board_[ getRow() - row ][ column - 1 ] = object; }
+    char getObject(int row, int column) { return board_[ getRow() - row ][ column - 1 ]; }
 
     int changeRow();
     int changeColumn();
 
-    int getRow();
-    int getColumn();
+    int getRow() { return row_; }
+    int getColumn() { return column_; }
 
 };
 
@@ -46,26 +46,6 @@ Board::Board()
     setRow(5 + rand() % 4 * 2);
     setColumn(7 + rand() % 8 * 2);
     init();
-}
-
-void Board::setRow(int row)
-{
-    row_ = row;
-}
-
-void Board::setColumn(int column)
-{
-    column_ = column;
-}
-
-int Board::getRow()
-{
-    return row_;
-}
-
-int Board::getColumn()
-{
-    return column_;
 }
 
 int Board::changeRow()
@@ -96,16 +76,6 @@ int Board::changeColumn()
     }                   
 
     return newColumn % 2 == 0 ? newColumn + 1 : newColumn;
-}
-
-void Board::setObject(int row, int column, char object)
-{
-    board_[ getRow() - row ][ column - 1 ] = object;
-}
-
-char Board::getObject(int row, int column)
-{
-    return board_[ getRow() - row ][ column - 1 ];
 }
 
 void Board::init()
@@ -197,48 +167,28 @@ public :
 
     void init(Board &b);
 
-    void setZombieSize(int zombieSize);
-    int getZombieSize();
+    void setZombieSize(int zombieSize) { zombieSize_ = zombieSize; }
+    int getZombieSize() { return zombieSize_; }
     int changeZombieSize();
 
-    int getZombieLife(int n);
-    int getZombieAttack(int n);
-    int getZombieRange(int n);
+    int getZombieLife(int n) { return zombieLife_[n]; }
+    int getZombieAttack(int n) { return zombieAttack_[n]; }
+    int getZombieRange(int n) { return zombieRange_[n]; }
 
-    int getAlienLife();
-    int getAlienAttack();
+    int getAlienLife() { return alienLife_; }
+    int getAlienAttack() { return alienAttack_; }
 
-    void setAlienRow(int alienRow);
-    void setAlienColumn(int alienColumn);
+    void setAlienRow(int alienRow) { alienRow_ = alienRow; }
+    void setAlienColumn(int alienColumn) { alienColumn_ = alienColumn; }
 
-    int getAlienRow();
-    int getAlienColumn();
+    int getAlienRow() { return alienRow_; }
+    int getAlienColumn() { return alienColumn_; }
 
     void alienMove(Board &b, string alienInput);
 };
 
 Character::Character()
 { 
-}
-
-void Character::setAlienRow(int alienRow)
-{
-    alienRow_ = alienRow;
-}
-
-void Character::setAlienColumn(int alienColumn)
-{
-    alienColumn_ = alienColumn;
-}
-
-void Character::setZombieSize(int zombieSize)
-{
-    zombieSize_ = zombieSize;
-}
-
-int Character::getZombieSize()
-{
-    return zombieSize_;
 }
 
 int Character::changeZombieSize()
@@ -254,41 +204,6 @@ int Character::changeZombieSize()
     }
 
     return newZombieSize;
-}
-
-int Character::getZombieLife(int n)
-{
-    return zombieLife_[n];
-}
-
-int Character::getZombieAttack(int n)
-{
-    return zombieAttack_[n];
-}
-
-int Character::getZombieRange(int n)
-{
-    return zombieRange_[n];
-}
-
-int Character::getAlienLife()
-{
-    return alienLife_;
-}
-
-int Character::getAlienAttack()
-{
-    return alienAttack_;
-}
-
-int Character::getAlienRow()
-{
-    return alienRow_;
-}
-
-int Character::getAlienColumn()
-{
-    return alienColumn_;
 }
 
 void Character::alienMove(Board &b, string alienInput)
