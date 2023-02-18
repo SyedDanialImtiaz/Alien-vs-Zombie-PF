@@ -72,14 +72,12 @@ int Board::changeRow()
 {   
     int newRow = 0;    
 
-    cout << endl << "new row = ";
-    cin >> newRow;                      
-
+    cout << endl << "new row = "; cin >> newRow;
+                          
     while(newRow <= 4 || newRow >= 17)
     {
         cout << endl << " value too small/big! please enter a different value.";
-        cout << endl << "new row = ";
-        cin >> newRow;
+        cout << endl << "new row = "; cin >> newRow;
     }
 
     return newRow % 2 == 0 ? newRow + 1 : newRow;
@@ -89,14 +87,12 @@ int Board::changeColumn()
 {
     int newColumn = 0;
 
-    cout << endl << "new column = ";
-        cin >> newColumn;
-
+    cout << endl << "new column = "; cin >> newColumn;
+    
     while(newColumn <= 6 || newColumn >= 31)
     {
         cout << endl << " value too small/big! please enter a different value.";
-        cout << endl << "new column = ";
-        cin >> newColumn;
+        cout << endl << "new column = "; cin >> newColumn; 
     }                   
 
     return newColumn % 2 == 0 ? newColumn + 1 : newColumn;
@@ -249,14 +245,12 @@ int Character::changeZombieSize()
 {
     int newZombieSize = 0;    
 
-    cout << endl << "new zombie size = ";
-    cin >> newZombieSize;                      
-
+    cout << endl << "new zombie size = "; cin >> newZombieSize;
+                          
     while(newZombieSize <= 0 || newZombieSize >= 10)
     {
         cout << endl << " value too small/big! please enter a different value.";
-        cout << endl << "new zombie size = ";
-        cin >> newZombieSize;
+        cout << endl << "new zombie size = "; cin >> newZombieSize;
     }
 
     return newZombieSize;
@@ -325,7 +319,6 @@ void Character::alienMove(Board &b, string alienInput)
     }
     else
     {
-        cout << "invalid input";
     }
 }
 
@@ -398,7 +391,6 @@ int main()
 
     ch.init(b);
 
-    //b.displayBoard();
     displayBoardInfo(b, ch);
 
     b.setRow(b.changeRow());
@@ -408,19 +400,89 @@ int main()
     b.init();
     ch.init(b);
 
-    b.displayBoard();
-    displayBoardInfo(b, ch);
-    displayCharacterAtributes(ch);
-
-    int m = 0;
+    char quit = 'n';
     do{
-        cout << "\n <Command> => "; cin >> command;
-        ch.alienMove(b, command);
-
         b.displayBoard();
-        displayBoardInfo(b, ch);
         displayCharacterAtributes(ch);
 
-    }while(m == 0);
+        cout << "\n<Command> => "; cin >> command;
+
+        if (command == "up" || command == "down" || command == "left" || command == "right")
+        {
+            ch.alienMove(b, command);
+            b.displayBoard();
+            displayCharacterAtributes(ch);
+        }
+        else if (command == "arrow")
+        {
+            int ArrowRow, ArrowColumn;
+            string direction;
+            cout << "Enter row, column and direction => "; cin >> ArrowRow >> ArrowColumn >> direction;
+                
+            char arrow = b.getObject(ArrowRow, ArrowColumn);
+            char newArrow;
+             if (direction == "up")
+            { 
+                newArrow = '^';
+                b.setObject(ArrowRow, ArrowColumn, newArrow); 
+            }
+            else if (direction == "down")
+            { 
+                newArrow = 'v';
+                b.setObject(ArrowRow, ArrowColumn, newArrow); 
+            }
+            else if (direction == "left")
+            { 
+                newArrow = '<';
+                b.setObject(ArrowRow, ArrowColumn, newArrow); 
+            }
+            else if (direction == "right")
+            { 
+                newArrow = '>';
+                b.setObject(ArrowRow, ArrowColumn, newArrow); 
+            }
+
+            cout << "Arrow " << arrow << " is switched to " << newArrow << endl;
+            pf::Pause();
+        }
+        else if (command == "help")
+        {
+            cout << "\nCommands\n"
+                 << "1. up     - Move up.\n"
+                 << "2. down   - Move down.\n"
+                 << "3. left   - Move left.\n"
+                 << "4. right  - Move right.\n"
+                 << "5. arrow  - Change the direction of the arrow.\n"
+                 << "6. help   - Display these user commands.\n"
+                 << "7. save   - Save the current game.\n"
+                 << "8. load   - Load a game.\n"
+                 << "9. quit   - Quit the game.\n";
+            pf::Pause();
+        }
+        else if (command == "save")
+        {
+
+        }
+        else if (command == "load")
+        {
+
+        }
+        else if (command == "quit")
+        {
+            cout << "Are you sure? (y/n) : "; cin >> quit;
+
+            if (quit == 'y')
+            {    
+                cout << "Goodbye!\n";
+                break;
+            }
+        }
+        else
+        {
+            cout << "invalid command! Please try again\n";
+            pf::Pause();
+        }
+
+    }while(quit == 'n');
 
 }
