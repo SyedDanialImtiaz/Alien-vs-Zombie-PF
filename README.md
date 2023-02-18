@@ -12,11 +12,17 @@ g++ pf\*.cpp main2.cpp -o game
 ```
 
 ## User Manual
+*Welcome to ALIEN VS ZOMBIE!*
+
+~Hello my alien friends! Before we begin our adventure in destroying THE MENACING ZOMBIES, we must know the "tactics" and find the most strategic way in\
+killing those zombies.~
 
 *How to customize size of the board*
 1. User must prompt the number of rows and columns.
 2. Once done, the board will be appeared as it prompted before and the Alien will automatically
    positioned at the centre of the board.
+*How to play*
+1. 
    
 ## Progress Log
 
