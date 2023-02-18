@@ -161,6 +161,7 @@ private :
     int zombieLife_[9], zombieAttack_[9], zombieRange_[9]; 
     int zombieSize_ = 1 + rand() % 9;;
     string alienInput_;
+    int inMap_;
 
 public :
     Character();
@@ -175,6 +176,9 @@ public :
     int getZombieAttack(int n) { return zombieAttack_[n]; }
     int getZombieRange(int n) { return zombieRange_[n]; }
 
+    void setAlienLife(int alienLife) { alienLife_ = alienLife; }
+    void setAlienAttack(int alienAttack) { alienAttack_ = alienAttack; }
+
     int getAlienLife() { return alienLife_; }
     int getAlienAttack() { return alienAttack_; }
 
@@ -184,7 +188,10 @@ public :
     int getAlienRow() { return alienRow_; }
     int getAlienColumn() { return alienColumn_; }
 
+    void insideMap(int alienRow, int alienColumn);
     void alienMove(Board &b, string alienInput);
+    void setInMap(int inMap) { inMap_ = inMap; }
+    int getInMap() { return inMap_; }
 };
 
 Character::Character()
@@ -206,31 +213,74 @@ int Character::changeZombieSize()
     return newZombieSize;
 }
 
+void Character::insideMap(int row, int column)
+{
+    Board b;
+
+    if ( (row > 0 && row <= b.getRow()) && ( column > 0 && column <= b.getColumn()) )
+        setInMap(1);
+    else 
+        setInMap(0);
+}
+
 void Character::alienMove(Board &b, string alienInput)
 {
     if( alienInput == "up" )
     { 
         setAlienRow(alienRow_ + 1);
-        b.setObject(alienRow_, alienColumn_, alien); 
-        b.setObject(alienRow_ - 1, alienColumn_, '.');
+        insideMap( alienRow_, alienColumn_ );
+        if ( inMap_ == 1 )
+        {
+            b.setObject(alienRow_, alienColumn_, alien); 
+            b.setObject(alienRow_ - 1, alienColumn_, '.');
+        }
+        else
+        {
+            setAlienRow(alienRow_ - 1);
+        }
     }
     else if( alienInput == "down" )
     {
         setAlienRow(alienRow_ - 1);
-        b.setObject(alienRow_, alienColumn_, alien);
-        b.setObject(alienRow_ + 1, alienColumn_, '.');
+        insideMap(alienRow_, alienColumn_);
+        if ( inMap_ == 1 )
+        {
+            b.setObject(alienRow_, alienColumn_, alien);
+            b.setObject(alienRow_ + 1, alienColumn_, '.');
+        }
+        else
+        {
+            setAlienRow(alienRow_ + 1);
+        }
     }
     else if( alienInput == "left" )
     {
         setAlienColumn(alienColumn_ - 1);
-        b.setObject(alienRow_, alienColumn_, alien);
-        b.setObject(alienRow_, alienColumn_ + 1, '.');
+        insideMap(alienRow_, alienColumn_);
+        if ( inMap_ == 1 )
+        {
+            b.setObject(alienRow_, alienColumn_, alien);
+            b.setObject(alienRow_, alienColumn_ + 1, '.');
+        }
+        else
+        {
+            setAlienColumn(alienColumn_ + 1);
+        }
+        
     }
     else if( alienInput == "right" )
     {
         setAlienColumn(alienColumn_ + 1);
-        b.setObject(alienRow_, alienColumn_, alien);
-        b.setObject(alienRow_, alienColumn_ - 1, '.');
+        insideMap(alienRow_, alienColumn_);
+        if ( inMap_ == 1 )
+        {
+            b.setObject(alienRow_, alienColumn_, alien);
+            b.setObject(alienRow_, alienColumn_ - 1, '.');
+        }
+        else
+        {
+            setAlienColumn(alienColumn_ - 1);
+        }
     }
     else
     {
@@ -247,7 +297,7 @@ void Character::init(Board &b)
     alienLife_ = 100 + rand() % 4 * 50;
     alienAttack_ = 0;
 
-    zombie = {'1','2', '3', '4', '5', '6', '7', '8', '9'};
+    zombie = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
     for(int n = 0; n < zombieSize_; n++)
     {
@@ -265,14 +315,46 @@ void Character::init(Board &b)
 class GameObject
 {
 private :
+    char arrow_;
 
 public :
     GameObject();
+    
+    void arrow(Character &ch);
+    void health(Character &ch);
+    void pod(Character &ch);
+    void rock(Character &ch);
+    void trail(Character &ch);
 
 };
 
 GameObject::GameObject()
-{   
+{      
+}
+
+void GameObject::health(Character &ch)
+{
+    ch.setAlienLife( ch.getAlienLife() + 20 );
+}
+
+void GameObject::arrow(Character &ch)
+{
+
+}
+
+void GameObject::pod(Character &ch)
+{
+    
+}
+
+void GameObject::trail(Character &ch)
+{
+    
+}
+
+void GameObject::rock(Character &ch)
+{
+    
 }
 
 void displayCharacterAtributes(Character ch)
@@ -322,11 +404,24 @@ int main()
 
         cout << "\n<Command> => "; cin >> command;
 
-        if (command == "up" || command == "down" || command == "left" || command == "right")
+        if (command == "up")
         {
-            ch.alienMove(b, command);
-            b.displayBoard();
-            displayCharacterAtributes(ch);
+            for(int m = ch.getAlienRow(); m <= b.getRow(); m++)
+            {
+                
+            }
+        }
+        else if ( command == "down")
+        {
+
+        }
+        else if ( command == "left")
+        {
+
+        }
+        else if ( command == "right")
+        {
+
         }
         else if (command == "arrow")
         {
