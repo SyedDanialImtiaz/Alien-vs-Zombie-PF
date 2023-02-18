@@ -15,7 +15,6 @@
 
 ### To Do
 
-List all the features not yet done. Remove this section if there is no incomplete requirements.
 
 1. Addiing save and load feature
 2. Adding game objects' interaction
@@ -23,6 +22,7 @@ List all the features not yet done. Remove this section if there is no incomplet
 4. Adding zombies' movement
 
 ## Additional Features
+
 
 No additional features
 
