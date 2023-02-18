@@ -20,6 +20,7 @@ Hello my alien friends! Before we begin our adventure in destroying ~THE MENACIN
 1. User must prompt the number of rows and columns.
 2. Once done, the board will be appeared as it prompted before and the Alien will automatically
    positioned at the centre of the board.
+   
 *How to play*
 1. User will be provided with the life, attack and range of alien and zombies.
 2. 
