@@ -12,11 +12,11 @@ Youtube link to our video demo Part 2 :
 ```
 g++ pf\*.cpp main2.cpp -o game
 ```
-
-## User Manual
-*Welcome to ALIEN VS ZOMBIE!*
+##Welcome to ALIEN VS ZOMBIE!
 
 Hello my alien friends! Before we begin our adventure in destroying ~THE MENACING ZOMBIES~, we must know the "tactics" and find the most strategic way in killing those zombies.
+
+## User Manual
 
 *How to customize size of the board*
 1. User must prompt the number of rows and columns.
