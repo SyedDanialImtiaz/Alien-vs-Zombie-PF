@@ -34,11 +34,11 @@ No additional features
 1. Adding movement to the Alien
 2. Adding random Zombies' position and attributes generator
 3. Adding game controls
+4. Adding game objects interaction
 
 ### Hilman Danish bin Hamka
 
 1. Writing the documentation
-2. Adding game objects interaction
 
 ### Adam bin Azmanhazim
 
