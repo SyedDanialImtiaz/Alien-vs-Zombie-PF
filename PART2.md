@@ -42,7 +42,7 @@ No additional features
 
 ### Adam bin Azmanhazim
 
-1. Making a video for the demo of the game (code, game demo, header files).
+1. Making a video for the demo of the game (code, game demo, header files.
 2. Making the code look clean.
 
 
