@@ -25,6 +25,7 @@ public :
     int getZombieSize() { return zombieSize_; }
     int changeZombieSize();
 
+    void setZombieLife(int n, int zombieLife) { zombieLife_[n] = zombieLife; }
     int getZombieLife(int n) { return zombieLife_[n]; }
     int getZombieAttack(int n) { return zombieAttack_[n]; }
     int getZombieRange(int n) { return zombieRange_[n]; }

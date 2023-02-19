@@ -40,7 +40,7 @@ void displayBoardInfo(Board b, Character ch)
          << "zombie size  => " << ch.getZombieSize() << endl;
 }
 
-void addHealth(Character &ch, int initAlienHealth)
+void health(Character &ch, int initAlienHealth)
 {
     int health = 20;
     for ( int h = 1; h <= health; h++)
@@ -60,6 +60,12 @@ void rock(Board &b, Character ch)
     
     int objNo = rand() % noOfObjects;
     b.setObject( ch.getAlienRow(), ch.getAlienColumn(), objects[objNo] );
+}
+
+void pod(Character &ch)
+{
+    int zombie = 1 + rand() % ch.getZombieSize();
+    ch.setZombieLife( zombie, ch.getZombieLife(zombie) - 10 );
 }
 
 int main()
@@ -127,6 +133,7 @@ int main()
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'p')
                 {
                     cout << "\nAlien found pod\n";
+                    pod(ch);
                     ch.alienMove(b, "up");
                     pf::Pause();
                 }
@@ -134,7 +141,7 @@ int main()
                 {
                     cout << "\nAlien found health\n";
                     ch.alienMove(b, "up");
-                    addHealth(ch, initAlienLife);
+                    health(ch, initAlienLife);
                     pf::Pause();
                 }
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '^' )
@@ -195,6 +202,7 @@ int main()
                 {
                     cout << "\nAlien hit a zombie\n";
                     ch.setAlienRow( ch.getAlienRow() - 1 );
+                    ch.setAlienAttack(0);
                     command = "trailreset";
                     pf::Pause();
                     break;
@@ -221,6 +229,7 @@ int main()
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'p')
                 {
                     cout << "\nAlien found pod\n";
+                    pod(ch);
                     ch.alienMove(b, "down");
                     pf::Pause();
                 }
@@ -228,7 +237,7 @@ int main()
                 {
                     cout << "\nAlien found health\n";
                     ch.alienMove(b, "down");
-                    addHealth(ch, initAlienLife);
+                    health(ch, initAlienLife);
                     pf::Pause();
                 }
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '^' )
@@ -289,6 +298,7 @@ int main()
                 {
                     cout << "\nAlien hit a zombie\n";
                     ch.setAlienRow( ch.getAlienRow() + 1 );
+                    ch.setAlienAttack(0);
                     command = "trailreset";
                     pf::Pause();
                     break;
@@ -315,6 +325,7 @@ int main()
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'p')
                 {
                     cout << "\nAlien found pod\n";
+                    pod(ch);
                     ch.alienMove(b, "left");
                     pf::Pause();
                 }
@@ -322,7 +333,7 @@ int main()
                 {
                     cout << "\nAlien found health\n";
                     ch.alienMove(b, "left");
-                    addHealth(ch, initAlienLife);
+                    health(ch, initAlienLife);
                     pf::Pause();
                 }
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '^' )
@@ -383,6 +394,7 @@ int main()
                 {
                     cout << "\nAlien hit a zombie\n";
                     ch.setAlienColumn( ch.getAlienColumn() + 1 );
+                    ch.setAlienAttack(0);
                     command = "trailreset";
                     pf::Pause();
                     break;
@@ -409,6 +421,7 @@ int main()
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'p')
                 {
                     cout << "\nAlien found pod\n";
+                    pod(ch);
                     ch.alienMove(b, "right");
                     pf::Pause();
                 }
@@ -416,7 +429,7 @@ int main()
                 {
                     cout << "\nAlien found health\n";
                     ch.alienMove(b, "right");
-                    addHealth(ch, initAlienLife);
+                    health(ch, initAlienLife);
                     pf::Pause();
                 }
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '^' )
@@ -477,6 +490,7 @@ int main()
                 {
                     cout << "\nAlien hit a zombie\n";
                     ch.setAlienColumn( ch.getAlienColumn() - 1 );
+                    ch.setAlienAttack(0);
                     command = "trailreset";
                     pf::Pause();
                     break;
