@@ -12,14 +12,14 @@
 1. Make Alien movements and attributes
 2. Randomly generate zombie position and attributes
 3. Adding game controls
+4. Adding game objects' interaction
 
 ### To Do
 
 
 1. Addiing save and load feature
-2. Adding game objects' interaction
-3. Additional features
-4. Adding zombies' movement
+2. Additional features
+3. Adding zombies' movement
 
 ## Additional Features
 
@@ -31,8 +31,9 @@ No additional features
 
 ### Syed Danial Imtiaz bin Syed Rahim
 
-1. Adding movement to the alien
-2. Adding quit feature
+1. Adding movement to the Alien
+2. Adding random Zombies' position and attributes generator
+3. Adding game controls
 
 ### Hilman Danish bin Hamka
 
