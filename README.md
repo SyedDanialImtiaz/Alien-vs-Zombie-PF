@@ -12,7 +12,7 @@ Youtube link to our video demo Part 2 :
 ```
 g++ pf\*.cpp main2.cpp -o game
 ```
-##Welcome to ALIEN VS ZOMBIE!
+## Welcome to ALIEN VS ZOMBIE!
 
 Hello my alien friends! Before we begin our adventure in destroying ~THE MENACING ZOMBIES~, we must know the "tactics" and find the most strategic way in killing those zombies.
 
