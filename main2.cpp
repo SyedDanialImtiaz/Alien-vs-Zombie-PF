@@ -161,7 +161,6 @@ private :
     int zombieLife_[9], zombieAttack_[9], zombieRange_[9]; 
     int zombieSize_ = 1 + rand() % 9;;
     string alienInput_;
-    int inMap_;
 
 public :
     Character();
@@ -188,10 +187,6 @@ public :
     int getAlienRow() { return alienRow_; }
     int getAlienColumn() { return alienColumn_; }
 
-    void insideMap(int alienRow, int alienColumn);
-    void alienMove(Board &b, string alienInput);
-    void setInMap(int inMap) { inMap_ = inMap; }
-    int getInMap() { return inMap_; }
 };
 
 Character::Character()
@@ -211,80 +206,6 @@ int Character::changeZombieSize()
     }
 
     return newZombieSize;
-}
-
-void Character::insideMap(int row, int column)
-{
-    Board b;
-
-    if ( (row > 0 && row <= b.getRow()) && ( column > 0 && column <= b.getColumn()) )
-        setInMap(1);
-    else 
-        setInMap(0);
-}
-
-void Character::alienMove(Board &b, string alienInput)
-{
-    if( alienInput == "up" )
-    { 
-        setAlienRow(alienRow_ + 1);
-        insideMap( alienRow_, alienColumn_ );
-        if ( inMap_ == 1 )
-        {
-            b.setObject(alienRow_, alienColumn_, alien); 
-            b.setObject(alienRow_ - 1, alienColumn_, '.');
-        }
-        else
-        {
-            setAlienRow(alienRow_ - 1);
-        }
-    }
-    else if( alienInput == "down" )
-    {
-        setAlienRow(alienRow_ - 1);
-        insideMap(alienRow_, alienColumn_);
-        if ( inMap_ == 1 )
-        {
-            b.setObject(alienRow_, alienColumn_, alien);
-            b.setObject(alienRow_ + 1, alienColumn_, '.');
-        }
-        else
-        {
-            setAlienRow(alienRow_ + 1);
-        }
-    }
-    else if( alienInput == "left" )
-    {
-        setAlienColumn(alienColumn_ - 1);
-        insideMap(alienRow_, alienColumn_);
-        if ( inMap_ == 1 )
-        {
-            b.setObject(alienRow_, alienColumn_, alien);
-            b.setObject(alienRow_, alienColumn_ + 1, '.');
-        }
-        else
-        {
-            setAlienColumn(alienColumn_ + 1);
-        }
-        
-    }
-    else if( alienInput == "right" )
-    {
-        setAlienColumn(alienColumn_ + 1);
-        insideMap(alienRow_, alienColumn_);
-        if ( inMap_ == 1 )
-        {
-            b.setObject(alienRow_, alienColumn_, alien);
-            b.setObject(alienRow_, alienColumn_ - 1, '.');
-        }
-        else
-        {
-            setAlienColumn(alienColumn_ - 1);
-        }
-    }
-    else
-    {
-    }
 }
 
 void Character::init(Board &b)
@@ -375,11 +296,12 @@ void displayBoardInfo(Board b, Character ch)
 {
     cout << "board row    => " << b.getRow() << endl
          << "board column => " << b.getColumn() << endl
-         << "zombie size  => " << ch.getZombieSize() << endl << endl;
+         << "zombie size  => " << ch.getZombieSize() << endl;
 }
 
 int main()
 {
+    pf::ClearScreen();
     srand(time(NULL));
 
     Board b;
@@ -390,38 +312,349 @@ int main()
 
     displayBoardInfo(b, ch);
 
-    b.setRow(b.changeRow());
-    b.setColumn(b.changeColumn());
-    ch.setZombieSize(ch.changeZombieSize());
+    char changeSetting = 'n';
+    cout << "\nDo you want to change the Settings? (y/n) : "; cin >> changeSetting;
+    
+    if ( changeSetting == 'y')
+    {
+        pf::ClearScreen();
+        b.setRow(b.changeRow());
+        b.setColumn(b.changeColumn());
+        ch.setZombieSize(ch.changeZombieSize());
+    }
 
     b.init();
     ch.init(b);
 
+    command = "input";
     char quit = 'n';
     do{
         b.displayBoard();
         displayCharacterAtributes(ch);
 
-        cout << "\n<Command> => "; cin >> command;
+        if ( command == "input" ) { cout << "\n<Command> => "; cin >> command; }
 
-        if (command == "up")
+        if( command == "trailreset")
         {
-            for(int m = ch.getAlienRow(); m <= b.getRow(); m++)
+            for ( int i = 0; i < b.getRow(); i++ )
             {
+                for ( int j = 0; j < b.getColumn(); j++ )
+                {
+                    
+                }
+            }
+        }
+        else if (command == "up")
+        {   
+            int r = ch.getAlienRow();
+            while ( r < b.getRow() )
+            {
+                ch.setAlienRow( ch.getAlienRow() + 1 );
+                if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == ' ' || b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '.' )
+                {
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
+                    b.setObject( ch.getAlienRow() - 1, ch.getAlienColumn(), '.');
+                }
+                else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'p')
+                {
+                    cout << "\nAlien found pod\n";
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
+                    b.setObject( ch.getAlienRow() - 1, ch.getAlienColumn(), '.');
+                    pf::Pause();
+                }
+                else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'h')
+                {
+                    cout << "\nAlien found health\n";
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
+                    b.setObject( ch.getAlienRow() - 1, ch.getAlienColumn(), '.');
+                    pf::Pause();
+                }
+                else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '^' )
+                {
+                    cout << "\nAlien finds an arrow\n";
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
+                    b.setObject( ch.getAlienRow() - 1, ch.getAlienColumn(), '.');
+                    command = "up";
+                    pf::Pause();
+                    break;
+                }
+                else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'v' )
+                {
+                    cout << "\nAlien finds an arrow\n";
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
+                    b.setObject( ch.getAlienRow() - 1, ch.getAlienColumn(), '.');
+                    command = "down";
+                    pf::Pause();
+                    break;
+                }
+                else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '<' )
+                {
+                    cout << "\nAlien finds an arrow\n";
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
+                    b.setObject( ch.getAlienRow() - 1, ch.getAlienColumn(), '.');
+                    command = "left";
+                    pf::Pause();
+                    break;
+                }
+                else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '>' )
+                {
+                    cout << "\nAlien finds an arrow\n";
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
+                    b.setObject( ch.getAlienRow() - 1, ch.getAlienColumn(), '.');
+                    command = "right";
+                    pf::Pause();
+                    break;
+                }
+                else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'r' )
+                {
+                    cout << "\nAlien hit a rock\n";
+                    ch.setAlienRow( ch.getAlienRow() - 1 );
+                    command = "trailreset";
+                    pf::Pause();
+                    break;
+                }
                 
+                b.displayBoard();
+                displayCharacterAtributes(ch);
+                r++;
+                if ( r == b.getRow() ) { cout << "\nAlien hit the border\n"; command = "trailreset"; }
+                
+                pf::Pause();            
             }
         }
         else if ( command == "down")
         {
-
+            int r = ch.getAlienRow();
+            while ( r > 1 )
+            {
+                ch.setAlienRow( ch.getAlienRow() - 1 );
+                if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == ' ' || b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '.' )
+                {
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
+                    b.setObject( ch.getAlienRow() + 1, ch.getAlienColumn(), '.');
+                }
+                else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'p')
+                {
+                    cout << "\nAlien found pod\n";
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
+                    b.setObject( ch.getAlienRow() + 1, ch.getAlienColumn(), '.');
+                    pf::Pause();
+                }
+                else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'h')
+                {
+                    cout << "\nAlien found health\n";
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
+                    b.setObject( ch.getAlienRow() + 1, ch.getAlienColumn(), '.');
+                    pf::Pause();
+                }
+                else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '^' )
+                {
+                    cout << "\nAlien finds an arrow\n";
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
+                    b.setObject( ch.getAlienRow() + 1, ch.getAlienColumn(), '.');
+                    command = "up";
+                    pf::Pause();
+                    break;
+                }
+                else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'v' )
+                {
+                    cout << "\nAlien finds an arrow\n";
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
+                    b.setObject( ch.getAlienRow() + 1, ch.getAlienColumn(), '.');
+                    command = "down";
+                    pf::Pause();
+                    break;
+                }
+                else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '<' )
+                {
+                    cout << "\nAlien finds an arrow\n";
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
+                    b.setObject( ch.getAlienRow() + 1, ch.getAlienColumn(), '.');
+                    command = "left";
+                    pf::Pause();
+                    break;
+                }
+                else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '>' )
+                {
+                    cout << "\nAlien finds an arrow\n";
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
+                    b.setObject( ch.getAlienRow() + 1, ch.getAlienColumn(), '.');
+                    command = "right";
+                    pf::Pause();
+                    break;
+                }
+                else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'r' )
+                {
+                    cout << "\nAlien hit a rock\n";
+                    ch.setAlienRow( ch.getAlienRow() + 1 );
+                    pf::Pause();
+                    command = "trailreset";
+                    break;
+                }
+                
+                b.displayBoard();
+                displayCharacterAtributes(ch);
+                r--;
+                if ( r == 0 ) { cout << "\nAlien hit the border\n"; command = "trailreset"; }
+                    
+                pf::Pause();            
+            }
         }
         else if ( command == "left")
         {
-
+            int c = ch.getAlienColumn();
+            while ( c > 1 )
+            {
+                ch.setAlienColumn( ch.getAlienColumn() - 1 );
+                if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == ' ' || b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '.' )
+                {
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn() + 1, '.');
+                }
+                else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'p')
+                {
+                    cout << "\nAlien found pod\n";
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn() + 1, '.');
+                    pf::Pause();
+                }
+                else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'h')
+                {
+                    cout << "\nAlien found health\n";
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn() + 1, '.');
+                    pf::Pause();
+                }
+                else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '^' )
+                {
+                    cout << "\nAlien finds an arrow\n";
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn() + 1, '.');
+                    command = "up";
+                    pf::Pause();
+                    break;
+                }
+                else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'v' )
+                {
+                    cout << "\nAlien finds an arrow\n";
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn() + 1, '.');
+                    command = "down";
+                    pf::Pause();
+                    break;
+                }
+                else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '<' )
+                {
+                    cout << "\nAlien finds an arrow\n";
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn() + 1, '.');
+                    command = "left";
+                    pf::Pause();
+                    break;
+                }
+                else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '>' )
+                {
+                    cout << "\nAlien finds an arrow\n";
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn() + 1, '.');
+                    command = "right";
+                    pf::Pause();
+                    break;
+                }
+                else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'r' )
+                {
+                    cout << "\nAlien hit a rock\n";
+                    ch.setAlienColumn( ch.getAlienColumn() + 1 );
+                    pf::Pause();
+                    command = "trailreset";
+                    break;
+                }
+                
+                b.displayBoard();
+                displayCharacterAtributes(ch);
+                c--;
+                if ( c == 0 ) { cout << "\nAlien hit the border\n"; command = "trailreset"; }
+                    
+                pf::Pause();            
+            }
         }
         else if ( command == "right")
         {
-
+            int c = ch.getAlienColumn();
+            while ( c < b.getColumn() )
+            {
+                ch.setAlienColumn( ch.getAlienColumn() + 1 );
+                if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == ' ' || b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '.' )
+                {
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn() - 1, '.');
+                }
+                else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'p')
+                {
+                    cout << "\nAlien found pod\n";
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn() - 1, '.');
+                    pf::Pause();
+                }
+                else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'h')
+                {
+                    cout << "\nAlien found health\n";
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn() - 1, '.');
+                    pf::Pause();
+                }
+                else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '^' )
+                {
+                    cout << "\nAlien finds an arrow\n";
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn() - 1, '.');
+                    command = "up";
+                    pf::Pause();
+                    break;
+                }
+                else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'v' )
+                {
+                    cout << "\nAlien finds an arrow\n";
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn() - 1, '.');
+                    command = "down";
+                    pf::Pause();
+                    break;
+                }
+                else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '<' )
+                {
+                    cout << "\nAlien finds an arrow\n";
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn() - 1, '.');
+                    command = "left";
+                    pf::Pause();
+                    break;
+                }
+                else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '>' )
+                {
+                    cout << "\nAlien finds an arrow\n";
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
+                    b.setObject( ch.getAlienRow(), ch.getAlienColumn() - 1, '.');
+                    command = "right";
+                    pf::Pause();
+                    break;
+                }
+                else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'r' )
+                {
+                    cout << "\nAlien hit a rock\n";
+                    ch.setAlienColumn( ch.getAlienColumn() - 1 );
+                    pf::Pause();
+                    command = "trailreset";
+                    break;
+                }
+                
+                b.displayBoard();
+                displayCharacterAtributes(ch);
+                c--;
+                if ( c == 0 ) { cout << "\nAlien hit the border\n"; command = "trailreset"; }
+                    
+                pf::Pause();            
+            }
         }
         else if (command == "arrow")
         {
