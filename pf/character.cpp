@@ -1,9 +1,11 @@
 #include "character.hpp"
 #include <iostream>
+#include <string>
 using namespace std;
 
 Character::Character()
 { 
+    setZombieSize(1 + rand() % 9);
 }
 
 int Character::changeZombieSize()
@@ -23,7 +25,6 @@ int Character::changeZombieSize()
 
 void Character::init(Board &b)
 {
-    setZombieSize(1 + rand() % 9);
     setAlienRow(b.getRow() / 2 + 1);
     setAlienColumn(b.getColumn() / 2 + 1);
 
@@ -47,24 +48,24 @@ void Character::init(Board &b)
     }
 }
 
-void Character::alienMove(Board &b, string command)
+void Character::alienMove(Board &b, string alienInput)
 {
-    if ( command == "up" )
+    if ( alienInput == "up" )
     {
         b.setObject( alienRow_, alienColumn_, 'A' );
         b.setObject( alienRow_ - 1, alienColumn_, '.' );
     }
-    else if ( command == "down" )
+    else if ( alienInput == "down" )
     {
         b.setObject( alienRow_, alienColumn_, 'A' );
         b.setObject( alienRow_ + 1, alienColumn_, '.' );
     }
-    else if ( command == "left" )
+    else if ( alienInput == "left" )
     {
         b.setObject( alienRow_, alienColumn_, 'A' );
         b.setObject( alienRow_, alienColumn_ + 1, '.' );
     }
-    else if ( command == "right" )
+    else if ( alienInput == "right" )
     {
         b.setObject( alienRow_, alienColumn_, 'A' );
         b.setObject( alienRow_, alienColumn_ - 1, '.' );

@@ -53,6 +53,15 @@ void addHealth(Character &ch, int initAlienHealth)
     }
 }
 
+void rock(Board &b, Character ch)
+{
+    char objects[] = {'<', '>', '^', 'v', 'h', 'p' };
+    const int noOfObjects = 6;
+    
+    int objNo = rand() % noOfObjects;
+    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), objects[objNo] );
+}
+
 int main()
 {
     pf::ClearScreen();
@@ -80,8 +89,6 @@ int main()
     ch.init(b);
 
     const int initAlienLife = ch.getAlienLife();
-    int r = ch.getAlienRow();
-    int c = ch.getAlienColumn();
     string command = "input";
     char quit = 'n';
     do{
@@ -109,6 +116,7 @@ int main()
         }
         else if (command == "up")
         {   
+            int r = ch.getAlienRow();
             while ( r < b.getRow() )
             {
                 ch.setAlienRow( ch.getAlienRow() + 1 );
@@ -168,6 +176,7 @@ int main()
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'r' )
                 {
                     cout << "\nAlien hit a rock\n";
+                    rock(b, ch);
                     ch.setAlienRow( ch.getAlienRow() - 1 );
                     ch.setAlienAttack(0);
                     command = "trailreset";
@@ -201,6 +210,7 @@ int main()
         }
         else if ( command == "down")
         {
+            int r = ch.getAlienRow();
             while ( r > 1 )
             {
                 ch.setAlienRow( ch.getAlienRow() - 1 );
@@ -260,10 +270,11 @@ int main()
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'r' )
                 {
                     cout << "\nAlien hit a rock\n";
+                    rock(b, ch);
                     ch.setAlienRow( ch.getAlienRow() + 1 );
                     ch.setAlienAttack(0);
-                    pf::Pause();
                     command = "trailreset";
+                    pf::Pause();
                     break;
                 }
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '1' ||  
@@ -286,13 +297,14 @@ int main()
                 b.displayBoard();
                 displayCharacterAtributes(ch);
                 r--;
-                if ( r == 0 ) { cout << "\nAlien hit the border\n"; command = "trailreset"; }
+                if ( r == 1 ) { cout << "\nAlien hit the border\n"; command = "trailreset"; }
                     
                 pf::Pause();            
             }
         }
         else if ( command == "left")
         {
+            int c = ch.getAlienColumn();
             while ( c > 1 )
             {
                 ch.setAlienColumn( ch.getAlienColumn() - 1 );
@@ -352,10 +364,11 @@ int main()
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'r' )
                 {
                     cout << "\nAlien hit a rock\n";
+                    rock(b, ch);
                     ch.setAlienColumn( ch.getAlienColumn() + 1 );
                     ch.setAlienAttack(0);
-                    pf::Pause();
                     command = "trailreset";
+                    pf::Pause();
                     break;
                 }
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '1' ||  
@@ -378,13 +391,14 @@ int main()
                 b.displayBoard();
                 displayCharacterAtributes(ch);
                 c--;
-                if ( c == 0 ) { cout << "\nAlien hit the border\n"; command = "trailreset"; }
+                if ( c == 1 ) { cout << "\nAlien hit the border\n"; command = "trailreset"; }
                     
                 pf::Pause();            
             }
         }
         else if ( command == "right")
         {
+            int c = ch.getAlienColumn();
             while ( c < b.getColumn() )
             {
                 ch.setAlienColumn( ch.getAlienColumn() + 1 );
@@ -444,10 +458,11 @@ int main()
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'r' )
                 {
                     cout << "\nAlien hit a rock\n";
+                    rock(b, ch);
                     ch.setAlienColumn( ch.getAlienColumn() - 1 );
                     ch.setAlienAttack(0);
-                    pf::Pause();
                     command = "trailreset";
+                    pf::Pause();
                     break;
                 }
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '1' ||  
@@ -470,7 +485,7 @@ int main()
                 b.displayBoard();
                 displayCharacterAtributes(ch);
                 c--;
-                if ( c == 0 ) { cout << "\nAlien hit the border\n"; command = "trailreset"; }
+                if ( c == b.getColumn() ) { cout << "\nAlien hit the border\n"; command = "trailreset"; }
                     
                 pf::Pause();            
             }

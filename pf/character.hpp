@@ -15,7 +15,6 @@ private :
     int alienLife_, alienAttack_;
     int zombieLife_[9], zombieAttack_[9], zombieRange_[9]; 
     int zombieSize_;
-    std::string alienInput_;
 
 public :
     Character();
@@ -42,7 +41,7 @@ public :
     int getAlienRow() { return alienRow_; }
     int getAlienColumn() { return alienColumn_; }
 
-    void alienMove(Board &b, string command);
+    void alienMove(Board &b, std::string alienInput);
 
 };
 #endif
