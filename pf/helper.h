@@ -1,5 +1,5 @@
-#ifndef PF_HELPER_H
-#define PF_HELPER_H
+#ifndef _HELPER_H
+#define _HELPER_H
 
 namespace pf
 {
