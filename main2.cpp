@@ -19,11 +19,11 @@
 using namespace std;
 
 
-void displayCharacterAtributes(Character ch)
+void displayCharacterAtributes(Character ch)            // To display character atributes
 {
     cout << " Alien    : Life " << ch.getAlienLife() << ",\tAttack   " << ch.getAlienAttack() << endl;
 
-    for(int x = 0; x < ch.getZombieSize(); x++)
+    for(int x = 0; x < ch.getZombieSize(); x++)         // Loop for every zombie
     {
         cout << " Zombie " << x + 1 
              << " : Life " << ch.getZombieLife(x) 
@@ -33,15 +33,15 @@ void displayCharacterAtributes(Character ch)
     cout << "\n\n";
 }
 
-void displayBoardInfo(Board b, Character ch)
+void displayBoardInfo(Board b, Character ch)        // To display board info
 {
     cout << "board row    => " << b.getRow() << endl
          << "board column => " << b.getColumn() << endl
          << "zombie size  => " << ch.getZombieSize() << endl;
 }
 
-void health(Character &ch, int initAlienHealth)
-{
+void health(Character &ch, int initAlienHealth)         // For health object, will restore life of alien 
+{                                                       // if alien's life has reach MAX capacity, function will stop
     int health = 20;
     for ( int h = 1; h <= health; h++)
     {
@@ -53,8 +53,8 @@ void health(Character &ch, int initAlienHealth)
     }
 }
 
-void rock(Board &b, Character ch)
-{
+void rock(Board &b, Character ch)                        // For rock object
+{                                                        // Will stop alien and reveal hidden object when hit
     char objects[] = {'<', '>', '^', 'v', 'h', 'p' };
     const int noOfObjects = 6;
     
@@ -62,9 +62,9 @@ void rock(Board &b, Character ch)
     b.setObject( ch.getAlienRow(), ch.getAlienColumn(), objects[objNo] );
 }
 
-void pod(Character &ch)
-{
-    int zombie = 1 + rand() % ch.getZombieSize();
+void pod(Character &ch)                                             // For pod object
+{                                                                   // Will inflict instant 10 damage to RANDOM zombie
+    int zombie = rand() % ch.getZombieSize();                       // note : I cannot afford the time & effort to do NEAREST zombie
     ch.setZombieLife( zombie, ch.getZombieLife(zombie) - 10 );
 }
 
@@ -80,8 +80,8 @@ int main()
 
     displayBoardInfo(b, ch);
 
-    char changeSetting = 'n';
-    cout << "\nDo you want to change the Settings? (y/n) : "; cin >> changeSetting;
+    char changeSetting = 'n';                                                           // Give the user the option to change game setting
+    cout << "\nDo you want to change the Settings? (y/n) : "; cin >> changeSetting;     // if they want to
     
     if ( changeSetting == 'y')
     {
@@ -101,26 +101,26 @@ int main()
         b.displayBoard();
         displayCharacterAtributes(ch);
 
-        if ( command == "input" ) { cout << "\n<Command> => "; cin >> command; }
+        if ( command == "input" ) { cout << "\n<Command> => "; cin >> command; }     // User input command here
 
-        if( command == "trailreset")
+        if( command == "trailreset")                                // For resetting the trail that alien left behind when moving
         {
             char objects[] = {'<', '>', '^', 'v', 'r', 'h', 'p', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '};
             const int noOfObjects = 15;
-            for ( int i = 1; i <= b.getRow(); i++ )
-            {
+            for ( int i = 1; i <= b.getRow(); i++ )                 
+            {                                                   // For checking in every row and column if there is a trail('.') 
                 for ( int j = 1; j <= b.getColumn(); j++ )
                 {
                     if ( b.getObject(i, j) == '.' )
                     {
-                        int objNo = rand() % noOfObjects;
+                        int objNo = rand() % noOfObjects;       // Trails are resetted to random objects
                         b.setObject(i, j, objects[objNo] ); 
                     }
                 }
             }
             command = "input";
         }
-        else if (command == "up")
+        else if (command == "up")               // All this is pretty self-explanatory :)
         {   
             int r = ch.getAlienRow();
             while ( r < b.getRow() )
@@ -132,26 +132,26 @@ int main()
                 }
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'p')
                 {
-                    cout << "\nAlien found pod\n";
+                    cout << "\nAlien found pod\n";                  // Found pod, deal damage
                     pod(ch);
                     ch.alienMove(b, "up");
                     pf::Pause();
                 }
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'h')
                 {
-                    cout << "\nAlien found health\n";
+                    cout << "\nAlien found health\n";               // Found health, restore alien life
                     ch.alienMove(b, "up");
                     health(ch, initAlienLife);
                     pf::Pause();
                 }
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '^' )
                 {
-                    cout << "\nAlien finds an arrow\n";
-                    ch.alienMove(b, "up");
+                    cout << "\nAlien finds an arrow\n";             // Found arrow, change direction according to arrow
+                    ch.alienMove(b, "up");  
                     ch.setAlienAttack( ch.getAlienAttack() + 20 );
                     command = "up";
                     pf::Pause();
-                    break;
+                    break;          // <-- this break is for exitting loop to execute another command that was given
                 }
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'v' )
                 {
@@ -182,11 +182,11 @@ int main()
                 }
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'r' )
                 {
-                    cout << "\nAlien hit a rock\n";
+                    cout << "\nAlien hit a rock\n";                 // Found rock, alien stop and reveal hidden object
                     rock(b, ch);
                     ch.setAlienRow( ch.getAlienRow() - 1 );
                     ch.setAlienAttack(0);
-                    command = "trailreset";
+                    command = "trailreset";     // <-- this is for executing the trail reset command above  
                     pf::Pause();
                     break;
                 }
@@ -194,7 +194,7 @@ int main()
                           b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '2' || 
                           b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '3' || 
                           b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '4' || 
-                          b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '5' || 
+                          b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '5' ||         // Found zombie, ....nothing happen :(
                           b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '6' || 
                           b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '7' || 
                           b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '8' || 
@@ -211,8 +211,8 @@ int main()
                 b.displayBoard();
                 displayCharacterAtributes(ch);
                 r++;
-                if ( r == b.getRow() ) { cout << "\nAlien hit the border\n"; command = "trailreset"; }
-                
+                if ( r == b.getRow() ) { cout << "\nAlien hit the border\n"; command = "trailreset"; }      // If the supposed position is outside the board, the loop will exit
+             
                 pf::Pause();            
             }
         }
@@ -498,17 +498,17 @@ int main()
                 
                 b.displayBoard();
                 displayCharacterAtributes(ch);
-                c--;
+                c++;
                 if ( c == b.getColumn() ) { cout << "\nAlien hit the border\n"; command = "trailreset"; }
                     
                 pf::Pause();            
             }
         }
-        else if (command == "arrow")
+        else if (command == "arrow")            // This command will allow the user to change the direction of designated arrow
         {
             int ArrowRow, ArrowColumn;
             string direction;
-            cout << "Enter row, column and direction => "; cin >> ArrowRow >> ArrowColumn >> direction;
+            cout << "Enter row, column and direction => "; cin >> ArrowRow >> ArrowColumn >> direction;     // User will input row, column and direction they want
                 
             char arrow = b.getObject(ArrowRow, ArrowColumn);
             char newArrow;
@@ -534,10 +534,10 @@ int main()
             }
 
             cout << "Arrow " << arrow << " is switched to " << newArrow << endl;
-            command = "input";
+            command = "input";                                   // <-- This command will allow the user to input new command
             pf::Pause();
         }
-        else if (command == "help")
+        else if (command == "help")             // Will display available commands
         {
             cout << "\nCommands\n"
                  << "1. up     - Move up.\n"
@@ -552,21 +552,21 @@ int main()
             command = "input";
             pf::Pause();
         }
-        else if (command == "save")
+        else if (command == "save")         // Sorry, not available
         {
             cout << "This function is not available at the moment.\n";
             command = "input";
             pf::Pause();
         }
-        else if (command == "load")
+        else if (command == "load")         // Same reason as above
         {
             cout << "This function is not available at the moment.\n";
             command = "input";
             pf::Pause();
         }
-        else if (command == "quit")
+        else if (command == "quit")         // Will allow the user to quit the game if they want to
         {
-            cout << "Are you sure? (y/n) : "; cin >> quit;
+            cout << "Are you sure? (y/n) : "; cin >> quit;      // Just to be sure, you know
 
             if (quit == 'y')
             {    
@@ -576,7 +576,7 @@ int main()
         }
         else
         {
-            cout << "invalid command! Please try again\n";
+            cout << "invalid command! Please try again\n";      // If user input wrong command
             command = "input";
             pf::Pause();
         }
