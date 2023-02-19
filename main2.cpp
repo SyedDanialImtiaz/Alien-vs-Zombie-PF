@@ -60,10 +60,8 @@ int main()
 
     Board b;
     Character ch;
-    string command;
 
     ch.init(b);
-    int initAlienLife = ch.getAlienLife();
 
     displayBoardInfo(b, ch);
 
@@ -81,7 +79,10 @@ int main()
     b.init();
     ch.init(b);
 
-    command = "input";
+    const int initAlienLife = ch.getAlienLife();
+    int r = ch.getAlienRow();
+    int c = ch.getAlienColumn();
+    string command = "input";
     char quit = 'n';
     do{
         b.displayBoard();
@@ -108,35 +109,30 @@ int main()
         }
         else if (command == "up")
         {   
-            int r = ch.getAlienRow();
             while ( r < b.getRow() )
             {
                 ch.setAlienRow( ch.getAlienRow() + 1 );
                 if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == ' ' || b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '.' )
                 {
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
-                    b.setObject( ch.getAlienRow() - 1, ch.getAlienColumn(), '.');
+                    ch.alienMove(b, "up");
                 }
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'p')
                 {
                     cout << "\nAlien found pod\n";
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
-                    b.setObject( ch.getAlienRow() - 1, ch.getAlienColumn(), '.');
+                    ch.alienMove(b, "up");
                     pf::Pause();
                 }
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'h')
                 {
                     cout << "\nAlien found health\n";
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
-                    b.setObject( ch.getAlienRow() - 1, ch.getAlienColumn(), '.');
+                    ch.alienMove(b, "up");
                     addHealth(ch, initAlienLife);
                     pf::Pause();
                 }
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '^' )
                 {
                     cout << "\nAlien finds an arrow\n";
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
-                    b.setObject( ch.getAlienRow() - 1, ch.getAlienColumn(), '.');
+                    ch.alienMove(b, "up");
                     ch.setAlienAttack( ch.getAlienAttack() + 20 );
                     command = "up";
                     pf::Pause();
@@ -145,8 +141,7 @@ int main()
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'v' )
                 {
                     cout << "\nAlien finds an arrow\n";
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
-                    b.setObject( ch.getAlienRow() - 1, ch.getAlienColumn(), '.');
+                    ch.alienMove(b, "up");
                     ch.setAlienAttack( ch.getAlienAttack() + 20 );
                     command = "down";
                     pf::Pause();
@@ -155,8 +150,7 @@ int main()
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '<' )
                 {
                     cout << "\nAlien finds an arrow\n";
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
-                    b.setObject( ch.getAlienRow() - 1, ch.getAlienColumn(), '.');
+                    ch.alienMove(b, "up");
                     ch.setAlienAttack( ch.getAlienAttack() + 20 );
                     command = "left";
                     pf::Pause();
@@ -165,8 +159,7 @@ int main()
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '>' )
                 {
                     cout << "\nAlien finds an arrow\n";
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
-                    b.setObject( ch.getAlienRow() - 1, ch.getAlienColumn(), '.');
+                    ch.alienMove(b, "up");
                     ch.setAlienAttack( ch.getAlienAttack() + 20 );
                     command = "right";
                     pf::Pause();
@@ -208,35 +201,30 @@ int main()
         }
         else if ( command == "down")
         {
-            int r = ch.getAlienRow();
             while ( r > 1 )
             {
                 ch.setAlienRow( ch.getAlienRow() - 1 );
                 if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == ' ' || b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '.' )
                 {
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
-                    b.setObject( ch.getAlienRow() + 1, ch.getAlienColumn(), '.');
+                    ch.alienMove(b, "down");
                 }
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'p')
                 {
                     cout << "\nAlien found pod\n";
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
-                    b.setObject( ch.getAlienRow() + 1, ch.getAlienColumn(), '.');
+                    ch.alienMove(b, "down");
                     pf::Pause();
                 }
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'h')
                 {
                     cout << "\nAlien found health\n";
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
-                    b.setObject( ch.getAlienRow() + 1, ch.getAlienColumn(), '.');
+                    ch.alienMove(b, "down");
                     addHealth(ch, initAlienLife);
                     pf::Pause();
                 }
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '^' )
                 {
                     cout << "\nAlien finds an arrow\n";
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
-                    b.setObject( ch.getAlienRow() + 1, ch.getAlienColumn(), '.');
+                    ch.alienMove(b, "down");
                     ch.setAlienAttack( ch.getAlienAttack() + 20 );
                     command = "up";
                     pf::Pause();
@@ -245,8 +233,7 @@ int main()
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'v' )
                 {
                     cout << "\nAlien finds an arrow\n";
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
-                    b.setObject( ch.getAlienRow() + 1, ch.getAlienColumn(), '.');
+                    ch.alienMove(b, "down");
                     ch.setAlienAttack( ch.getAlienAttack() + 20 );
                     command = "down";
                     pf::Pause();
@@ -255,8 +242,7 @@ int main()
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '<' )
                 {
                     cout << "\nAlien finds an arrow\n";
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
-                    b.setObject( ch.getAlienRow() + 1, ch.getAlienColumn(), '.');
+                    ch.alienMove(b, "down");
                     ch.setAlienAttack( ch.getAlienAttack() + 20 );
                     command = "left";
                     pf::Pause();
@@ -265,8 +251,7 @@ int main()
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '>' )
                 {
                     cout << "\nAlien finds an arrow\n";
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
-                    b.setObject( ch.getAlienRow() + 1, ch.getAlienColumn(), '.');
+                    ch.alienMove(b, "down");
                     ch.setAlienAttack( ch.getAlienAttack() + 20 );
                     command = "right";
                     pf::Pause();
@@ -308,35 +293,30 @@ int main()
         }
         else if ( command == "left")
         {
-            int c = ch.getAlienColumn();
             while ( c > 1 )
             {
                 ch.setAlienColumn( ch.getAlienColumn() - 1 );
                 if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == ' ' || b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '.' )
                 {
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn() + 1, '.');
+                    ch.alienMove(b, "left");
                 }
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'p')
                 {
                     cout << "\nAlien found pod\n";
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn() + 1, '.');
+                    ch.alienMove(b, "left");
                     pf::Pause();
                 }
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'h')
                 {
                     cout << "\nAlien found health\n";
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn() + 1, '.');
+                    ch.alienMove(b, "left");
                     addHealth(ch, initAlienLife);
                     pf::Pause();
                 }
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '^' )
                 {
                     cout << "\nAlien finds an arrow\n";
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn() + 1, '.');
+                    ch.alienMove(b, "left");
                     ch.setAlienAttack( ch.getAlienAttack() + 20 );
                     command = "up";
                     pf::Pause();
@@ -345,8 +325,7 @@ int main()
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'v' )
                 {
                     cout << "\nAlien finds an arrow\n";
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn() + 1, '.');
+                    ch.alienMove(b, "left");
                     ch.setAlienAttack( ch.getAlienAttack() + 20 );
                     command = "down";
                     pf::Pause();
@@ -355,8 +334,7 @@ int main()
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '<' )
                 {
                     cout << "\nAlien finds an arrow\n";
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn() + 1, '.');
+                    ch.alienMove(b, "left");
                     ch.setAlienAttack( ch.getAlienAttack() + 20 );
                     command = "left";
                     pf::Pause();
@@ -365,8 +343,7 @@ int main()
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '>' )
                 {
                     cout << "\nAlien finds an arrow\n";
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn() + 1, '.');
+                    ch.alienMove(b, "left");
                     ch.setAlienAttack( ch.getAlienAttack() + 20 );
                     command = "right";
                     pf::Pause();
@@ -408,35 +385,30 @@ int main()
         }
         else if ( command == "right")
         {
-            int c = ch.getAlienColumn();
             while ( c < b.getColumn() )
             {
                 ch.setAlienColumn( ch.getAlienColumn() + 1 );
                 if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == ' ' || b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '.' )
                 {
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn() - 1, '.');
+                    ch.alienMove(b, "right");
                 }
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'p')
                 {
                     cout << "\nAlien found pod\n";
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn() - 1, '.');
+                    ch.alienMove(b, "right");
                     pf::Pause();
                 }
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'h')
                 {
                     cout << "\nAlien found health\n";
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn() - 1, '.');
+                    ch.alienMove(b, "right");
                     addHealth(ch, initAlienLife);
                     pf::Pause();
                 }
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '^' )
                 {
                     cout << "\nAlien finds an arrow\n";
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn() - 1, '.');
+                    ch.alienMove(b, "right");
                     ch.setAlienAttack( ch.getAlienAttack() + 20 );
                     command = "up";
                     pf::Pause();
@@ -445,8 +417,7 @@ int main()
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == 'v' )
                 {
                     cout << "\nAlien finds an arrow\n";
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn() - 1, '.');
+                    ch.alienMove(b, "right");
                     ch.setAlienAttack( ch.getAlienAttack() + 20 );
                     command = "down";
                     pf::Pause();
@@ -455,8 +426,7 @@ int main()
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '<' )
                 {
                     cout << "\nAlien finds an arrow\n";
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn() - 1, '.');
+                    ch.alienMove(b, "right");
                     ch.setAlienAttack( ch.getAlienAttack() + 20 );
                     command = "left";
                     pf::Pause();
@@ -465,8 +435,7 @@ int main()
                 else if ( b.getObject( ch.getAlienRow(), ch.getAlienColumn() ) == '>' )
                 {
                     cout << "\nAlien finds an arrow\n";
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn(), 'A' );
-                    b.setObject( ch.getAlienRow(), ch.getAlienColumn() - 1, '.');
+                    ch.alienMove(b, "right");
                     ch.setAlienAttack( ch.getAlienAttack() + 20 );
                     command = "right";
                     pf::Pause();

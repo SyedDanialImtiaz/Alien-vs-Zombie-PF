@@ -42,5 +42,7 @@ public :
     int getAlienRow() { return alienRow_; }
     int getAlienColumn() { return alienColumn_; }
 
+    void alienMove(Board &b, string command);
+
 };
 #endif

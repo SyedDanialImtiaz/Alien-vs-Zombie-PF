@@ -46,3 +46,27 @@ void Character::init(Board &b)
         zombieRange_[n] = 1 + rand() % 3;
     }
 }
+
+void Character::alienMove(Board &b, string command)
+{
+    if ( command == "up" )
+    {
+        b.setObject( alienRow_, alienColumn_, 'A' );
+        b.setObject( alienRow_ - 1, alienColumn_, '.' );
+    }
+    else if ( command == "down" )
+    {
+        b.setObject( alienRow_, alienColumn_, 'A' );
+        b.setObject( alienRow_ + 1, alienColumn_, '.' );
+    }
+    else if ( command == "left" )
+    {
+        b.setObject( alienRow_, alienColumn_, 'A' );
+        b.setObject( alienRow_, alienColumn_ + 1, '.' );
+    }
+    else if ( command == "right" )
+    {
+        b.setObject( alienRow_, alienColumn_, 'A' );
+        b.setObject( alienRow_, alienColumn_ - 1, '.' );
+    }
+}
