@@ -17,7 +17,7 @@
 ### To Do
 
 
-1. Addiing save and load feature
+1. Adding save and load feature
 2. Additional features
 3. Adding zombies' movement
 
