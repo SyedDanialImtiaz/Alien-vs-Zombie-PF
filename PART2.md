@@ -2,7 +2,8 @@
 
 ## Video Demo
 
-[Video Demo](https://youtube.com).
+[TCP1101 | Assignment Part 2: Video Demo](https://youtu.be/lopQ84WmDPk)
+
 
 ## Minimum Requirements
 
@@ -42,7 +43,7 @@ No additional features
 
 ### Adam bin Azmanhazim
 
-1. Making a video for the demo of the game (code, game demo, header files.
+1. Making a video for the demo of the game (code, game demo, header files).
 2. Making the code look clean.
 
 
