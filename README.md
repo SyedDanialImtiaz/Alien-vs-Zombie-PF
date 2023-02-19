@@ -5,7 +5,7 @@ must go through challenges and obstacles to defeat the Zombies in the Battlefiel
 
 YouTube link to our video demo Part 1 : [TCP1101 | Assignment Part 1: Video Demo](https://youtu.be/rTWrMOoeHlA).
 
-Youtube link to our video demo Part 2 :
+Youtube link to our video demo Part 2 : [TCP1101 | Assignment Part 2: Video Demo](https://youtu.be/lopQ84WmDPk).
 
 ## Compilation Instructions
 
