@@ -38,7 +38,7 @@ No additional features
 ### Hilman Danish bin Hamka
 
 1. Writing the documentation
-2. Adding objects function
+2. Adding game objects interaction
 
 ### Adam bin Azmanhazim
 
